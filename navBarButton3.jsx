@@ -19,7 +19,7 @@ function NavBar({ stockitems }) {
     });
     setStock(newStock);
   };
-  const updatedList = stock.map((item, index) => {
+  const updatedList = stockitems.map((item, index) => {
     return (
       <Button onClick={(e) => moveToCart({id:1},e)} key={index}>
         {item.name}:{item.instock}
@@ -29,9 +29,24 @@ function NavBar({ stockitems }) {
   // note that React needs to have a single Parent
   return (
     <>
-      <ul style={{ listStyleType: "none" }}>{updatedList}</ul>
-      <h1>Shopping Cart</h1>
+      <ul key="stock" style={{ listStyleType: "none" }}>
+          {updatedList}
+        </ul>
+        <h1>Shopping Cart</h1>
+        <Cart cartitems={cart}> Cart Items</Cart>
     </>
+  );
+}
+function Cart({ cartitems }) {
+  const { Card, Button } = ReactBootstrap;
+  console.log("rendering Cart");
+  const updatedList = cartitems.map((item, index) => {
+    return <Button key={index}>{item.name}</Button>;
+  });
+  return (
+    <ul style={{ listStyleType: "none" }} key="cart">
+      {updatedList}
+    </ul>
   );
 }
 const menuItems = [
