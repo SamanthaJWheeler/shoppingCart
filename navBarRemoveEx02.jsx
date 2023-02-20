@@ -1,10 +1,10 @@
-// Ex 2 - remove any item from navbar with less than 2 in stock
+// Ex 2 - remove any item from navbar with less than minStock in stock
+// write out both the name and the number in stock in format apple:2
 function NavBar({ menuitems, minstock }) {
   let list1 = menuitems.filter(item => item.instock >= minstock);
   let list2 = list1.map((item, index) => {
     return <li key={index.toString()}>{item.name}</li>;
   });
-
   // note that React needs to have a single Parent
   return <ul style={{ listStyleType: "none" }}>{list2}</ul>;
 }
