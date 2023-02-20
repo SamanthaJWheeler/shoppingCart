@@ -4,24 +4,32 @@
 // use React.useState to keep track of Stock items
 // list out the Cart items in another column
 function NavBar({ stockitems }) {
+  const { Card, Button } = ReactBootstrap;
   const [cart, setCart] = React.useState([]);
   const [stock, setStock] = React.useState(stockitems);
-  const { Button } = ReactBootstrap;
+  
   // event apple:2
-  const moveToCart = (id,e) => {
-      console.log(id);
-    let [name, num] = e.target.innerHTML.split(":"); // innerHTML should be format name:3
+  const moveToCart = (e) => {
+    let [name, num] = e.target.innerHTML.split(":");
+    if (num <= 0) return;
+    // innerHTML should be format name:3
     // use newStock = stock.map to find "name" and decrease number in stock by 1
     // only if instock is >=  do we move item to Cart and update stock
-    let newStock = stock.map((item, index) => {
-      if (item.name == name) item.instock--;
+    let item = stock.filter((item) => item.name == name);
+    let newStock = stock.map((item) => {
+      if (item.name == name) {
+        item.instock--;
+      }
       return item;
     });
-    setStock(newStock);
+
+    setStock([...newStock]);
+    setCart([...cart,...item]);
+    console.log(`Cart: ${JSON.stringify(cart)}`);
   };
   const updatedList = stockitems.map((item, index) => {
     return (
-      <Button onClick={(e) => moveToCart({id:1},e)} key={index}>
+      <Button key={index} onClick={moveToCart}>
         {item.name}:{item.instock}
       </Button>
     );
